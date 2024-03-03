@@ -37,8 +37,8 @@ class BaseSqlalchemyModel(DeclarativeBase):
 
 
 class TestModel(BaseSqlalchemyModel):
-    name = mapped_column(String(255), nullable=False)
-    data = mapped_column(JSON)
+    name: Mapped[str] = mapped_column(String(255), nullable=False)
+    data: Mapped[dict] = mapped_column(JSON)
 
 
 # create tables
@@ -62,7 +62,7 @@ with sqlalchemy.orm.Session(engine) as session:
 # select by id
 print("select by id")
 with sqlalchemy.orm.Session(engine) as session:
-    testmodel = session.query(TestModel).get(test_model_id)
+    testmodel: TestModel = session.query(TestModel).get(test_model_id)
     print(testmodel)
     print(testmodel.id)
     print(testmodel.name)
@@ -70,3 +70,6 @@ with sqlalchemy.orm.Session(engine) as session:
     print(type(testmodel.data))  # <class 'dict'>
     print(testmodel.created_at)
     print(testmodel.updated_at)
+
+
+print(testmodel.data)
